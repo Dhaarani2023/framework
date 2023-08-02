@@ -9,6 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -44,14 +45,20 @@ public class BaseClass {
 		 reports.attachReporter(extent);
 		 
 	}
-
+	
+	@Parameters({"browser","url"})
 	@BeforeClass
-	public void startBrowser() {
+	public void startBrowser(String browser, String url) {
 		//driver=BrowserFactory.startApplication(driver, "chrome", "https://freecrm.com/index.html");
 		
 		//****** we can either hardcode the browser and url or we can pass from the config file like the below syntax
 		
 		driver = BrowserFactory.startApplication(driver, config.getBrowser(), config.getUrl());
+		
+		// passing the value from the pom.xml file
+		driver = BrowserFactory.startApplication(driver, browser, url);
+
+		
 	}
 	
 @AfterClass
